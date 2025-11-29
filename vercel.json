@@ -1,0 +1,15 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/check-expired-quizzes",
+      "schedule": "0 * * * *"
+    }
+  ]
+}
+

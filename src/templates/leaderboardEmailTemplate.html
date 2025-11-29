@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KnowIt Quiz Results</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fb;
+        padding: 20px;
+        line-height: 1.6;
+      }
+
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        padding: 40px 30px;
+        text-align: center;
+        color: #ffffff;
+      }
+
+      .header h1 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        letter-spacing: -0.5px;
+      }
+
+      .header p {
+        font-size: 16px;
+        opacity: 0.95;
+      }
+
+      .content {
+        padding: 40px 30px;
+      }
+
+      .greeting {
+        font-size: 18px;
+        color: #1f2937;
+        margin-bottom: 20px;
+      }
+
+      .message {
+        font-size: 16px;
+        color: #4b5563;
+        margin-bottom: 30px;
+        line-height: 1.8;
+      }
+
+      .quiz-info {
+        background: #f9fafb;
+        border-left: 4px solid #2563eb;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+      }
+
+      .quiz-info h2 {
+        font-size: 20px;
+        color: #1f2937;
+        margin-bottom: 10px;
+      }
+
+      .quiz-info p {
+        font-size: 14px;
+        color: #6b7280;
+        margin: 5px 0;
+      }
+
+      .leaderboard-section {
+        margin: 30px 0;
+      }
+
+      .leaderboard-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .leaderboard-item {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        background: #ffffff;
+        border: 2px solid #e5e7eb;
+      }
+
+      .leaderboard-item.first {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-color: #f59e0b;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+      }
+
+      .leaderboard-item.second {
+        background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+        border-color: #6b7280;
+        box-shadow: 0 4px 12px rgba(107, 114, 128, 0.2);
+      }
+
+      .leaderboard-item.third {
+        background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+        border-color: #f97316;
+        box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+      }
+
+      .rank {
+        font-size: 24px;
+        font-weight: 700;
+        width: 50px;
+        text-align: center;
+        color: #1f2937;
+      }
+
+      .medal {
+        font-size: 32px;
+        margin-right: 15px;
+      }
+
+      .user-info {
+        flex: 1;
+      }
+
+      .user-name {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 4px;
+      }
+
+      .user-score {
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .score-badge {
+        background: #2563eb;
+        color: #ffffff;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 18px;
+        font-weight: 700;
+        min-width: 80px;
+        text-align: center;
+      }
+
+      .expiration-notice {
+        background: #fef3c7;
+        border: 2px solid #f59e0b;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 30px 0;
+        text-align: center;
+      }
+
+      .expiration-notice h3 {
+        font-size: 18px;
+        color: #92400e;
+        margin-bottom: 10px;
+      }
+
+      .expiration-time {
+        font-size: 20px;
+        font-weight: 700;
+        color: #d97706;
+        margin-top: 10px;
+      }
+
+      .cta-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        color: #ffffff;
+        padding: 14px 32px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 16px;
+        margin: 20px 0;
+        text-align: center;
+      }
+
+      .footer {
+        background: #f9fafb;
+        padding: 30px;
+        text-align: center;
+        border-top: 1px solid #e5e7eb;
+      }
+
+      .footer p {
+        font-size: 12px;
+        color: #9ca3af;
+        margin: 5px 0;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .stat-box {
+        background: #f9fafb;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 5px;
+      }
+
+      .stat-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1f2937;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <!-- Header -->
+      <div class="header">
+        <h1>KnowIt</h1>
+        <p>{{email_type}} Results</p>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Greeting -->
+        <div class="greeting">
+          Hi <strong>{{user_name}}</strong>,
+        </div>
+
+        <!-- Main Message -->
+        <div class="message">
+          {{main_message}}
+        </div>
+
+        <!-- Quiz Info -->
+        <div class="quiz-info">
+          <h2>{{quiz_title}}</h2>
+          {{quiz_difficulty}}
+          {{expiration_date}}
+          {{total_attempts}}
+        </div>
+
+        <!-- Expiration Notice (for near-expiration emails) -->
+        {{expiration_notice_html}}
+
+        <!-- Leaderboard Section -->
+        {{leaderboard_html}}
+
+        <!-- Stats (for completion emails) -->
+        {{stats_html}}
+
+        <!-- Call to Action Button -->
+        {{cta_html}}
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p><strong>KnowIt</strong> - AI Powered Knowledge Testing Platform</p>
+        <p>You're receiving this email because {{email_reason}}</p>
+        <p>Visit: {{app_url}}</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Verify your KnowIt account</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f7fb;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 520px;
+        margin: 0 auto;
+        padding: 32px 24px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 14px 40px rgba(53, 72, 127, 0.1);
+      }
+
+      .logo {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+        color: #2563eb;
+        letter-spacing: -0.5px;
+        margin-bottom: 24px;
+      }
+
+      .otp-pill {
+        margin: 24px auto;
+        display: inline-block;
+        padding: 12px 32px;
+        font-size: 32px;
+        letter-spacing: 12px;
+        font-weight: 700;
+        color: #1d4ed8;
+        background: #e0ecff;
+        border-radius: 999px;
+      }
+
+      .footer {
+        margin-top: 32px;
+        font-size: 12px;
+        color: #94a3b8;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="logo">KnowIt</div>
+
+      <p>Hi <strong>{{user_name}}</strong>,</p>
+      <p>
+        Thanks for creating a KnowIt account. Please enter the one-time password below to confirm your email address and finish setting up your
+        profile.
+      </p>
+
+      <div class="otp-pill">{{otp_code}}</div>
+
+      <p>This code will expire in 10 minutes. If you didn’t request this, you can safely ignore this email.</p>
+
+      <div class="footer">
+        © KnowIt · AI Powered Knowledge Testing Platform<br />
+        You’re receiving this email because it was requested from our signup form.
+      </div>
+    </div>
+  </body>
+</html>
+
