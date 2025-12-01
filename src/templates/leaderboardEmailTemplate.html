@@ -178,6 +178,12 @@
         margin-bottom: 10px;
       }
 
+      .expiration-notice p {
+        font-size: 14px;
+        color: #78350f;
+        margin: 5px 0;
+      }
+
       .expiration-time {
         font-size: 20px;
         font-weight: 700;
@@ -211,6 +217,11 @@
         margin: 5px 0;
       }
 
+      .footer a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+
       .stats-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -235,6 +246,30 @@
         font-size: 24px;
         font-weight: 700;
         color: #1f2937;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .email-container {
+          margin: 0;
+          border-radius: 0;
+        }
+
+        .header {
+          padding: 30px 20px;
+        }
+
+        .content {
+          padding: 30px 20px;
+        }
+
+        .leaderboard-item {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -261,29 +296,29 @@
         <!-- Quiz Info -->
         <div class="quiz-info">
           <h2>{{quiz_title}}</h2>
-          {{quiz_difficulty}}
-          {{expiration_date}}
-          {{total_attempts}}
+          {{{quiz_difficulty}}}
+          {{{expiration_date}}}
+          {{{total_attempts}}}
         </div>
 
         <!-- Expiration Notice (for near-expiration emails) -->
-        {{expiration_notice_html}}
+        {{{expiration_notice_html}}}
 
         <!-- Leaderboard Section -->
-        {{leaderboard_html}}
+        {{{leaderboard_html}}}
 
         <!-- Stats (for completion emails) -->
-        {{stats_html}}
+        {{{stats_html}}}
 
         <!-- Call to Action Button -->
-        {{cta_html}}
+        {{{cta_html}}}
       </div>
 
       <!-- Footer -->
       <div class="footer">
         <p><strong>KnowIt</strong> - AI Powered Knowledge Testing Platform</p>
         <p>You're receiving this email because {{email_reason}}</p>
-        <p>Visit: {{app_url}}</p>
+        <p>Visit: <a href="{{app_url}}">{{app_url}}</a></p>
       </div>
     </div>
   </body>

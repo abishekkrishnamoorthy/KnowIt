@@ -152,7 +152,11 @@ export const sendExpirationEmail = async ({ creatorName, creatorEmail, quizTitle
       // Basic info
       user_name: creatorName,
       user_email: creatorEmail,
-      to_email: creatorEmail,
+      // Multiple recipient parameter formats for EmailJS compatibility
+      to_email: creatorEmail,        // Most common for dynamic recipients
+      to_name: creatorName,           // Recipient name
+      email: creatorEmail,           // Alternative format
+      reply_to: creatorEmail,        // Some services use reply_to
       email_type: 'Challenge Quiz',
       
       // Quiz info
@@ -202,6 +206,16 @@ export const sendExpirationEmail = async ({ creatorName, creatorEmail, quizTitle
 export const sendLeaderboardEmail = async ({ userName, userEmail, quizTitle, quizDifficulty, yourScore, yourCorrect, totalQuestions, topScores, appUrl }) => {
   try {
     ensureEmailJsConfig();
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!userEmail || !emailRegex.test(userEmail)) {
+      throw new Error('Invalid email address format');
+    }
+    
+    if (!userName || !userName.trim()) {
+      throw new Error('User name is required');
+    }
 
     const leaderboardHTML = topScores.length > 0 
       ? `<div class="leaderboard-section">
@@ -232,7 +246,11 @@ export const sendLeaderboardEmail = async ({ userName, userEmail, quizTitle, qui
       // Basic info
       user_name: userName,
       user_email: userEmail,
-      to_email: userEmail,
+      // Multiple recipient parameter formats for EmailJS compatibility
+      to_email: userEmail,        // Most common for dynamic recipients
+      to_name: userName,          // Recipient name
+      email: userEmail,           // Alternative format
+      reply_to: userEmail,        // Some services use reply_to
       email_type: 'Quiz Completion',
       
       // Quiz info
@@ -257,9 +275,15 @@ export const sendLeaderboardEmail = async ({ userName, userEmail, quizTitle, qui
 
     console.log('📧 Sending leaderboard email:', {
       userEmail,
+      userName,
       quizTitle,
       yourScore,
-      topScoresCount: topScores.length
+      topScoresCount: topScores.length,
+      templateParams: {
+        to_email: templateParams.to_email,
+        user_email: templateParams.user_email,
+        email: templateParams.email
+      }
     });
 
     const response = await sendEmailJSRequestWithTemplate(templateParams, leaderboardTemplateId);
@@ -309,7 +333,11 @@ export const sendNearExpirationEmail = async ({ creatorName, creatorEmail, quizT
       // Basic info
       user_name: creatorName,
       user_email: creatorEmail,
-      to_email: creatorEmail,
+      // Multiple recipient parameter formats for EmailJS compatibility
+      to_email: creatorEmail,        // Most common for dynamic recipients
+      to_name: creatorName,           // Recipient name
+      email: creatorEmail,           // Alternative format
+      reply_to: creatorEmail,        // Some services use reply_to
       email_type: 'Challenge Reminder',
       
       // Quiz info

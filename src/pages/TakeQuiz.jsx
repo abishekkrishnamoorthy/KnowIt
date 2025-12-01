@@ -156,12 +156,26 @@ export default function TakeQuiz() {
       });
 
       // Send leaderboard email if user completed their own quiz
+      console.log('📧 Checking if quiz completion email should be sent...');
+      console.log('User:', user ? { id: user.id, name: user.name, email: user.email } : 'Not logged in');
+      console.log('Quiz creator:', quiz.createdBy);
+      console.log('Is user the creator?', user && user.id === quiz.createdBy);
+      
       if (user && user.id === quiz.createdBy) {
+        console.log('✅ Conditions met - Sending quiz completion email...');
         try {
           const topScores = await storage.getTopScores(quiz.id, 3);
+          console.log('📊 Top scores retrieved:', topScores.length, 'scores');
           const appUrl = import.meta.env.VITE_APP_URL || (typeof window !== 'undefined' ? window.location.origin : '');
           
-          await sendLeaderboardEmail({
+          console.log('📧 Sending email with params:', {
+            userName: user.name,
+            userEmail: user.email,
+            quizTitle: quiz.title,
+            yourScore: finalScore
+          });
+          
+          const emailResult = await sendLeaderboardEmail({
             userName: user.name,
             userEmail: user.email,
             quizTitle: quiz.title,
@@ -172,9 +186,23 @@ export default function TakeQuiz() {
             topScores,
             appUrl
           });
+          
+          console.log('✅ Quiz completion email sent successfully!', emailResult);
         } catch (emailError) {
-          console.error('Error sending leaderboard email:', emailError);
+          console.error('❌ Error sending leaderboard email:', emailError);
+          console.error('Error details:', {
+            message: emailError.message,
+            stack: emailError.stack
+          });
           // Don't block the UI if email fails
+        }
+      } else {
+        console.log('ℹ️ Quiz completion email NOT sent - Conditions not met:');
+        if (!user) console.log('  - User is not logged in');
+        if (user && user.id !== quiz.createdBy) {
+          console.log('  - User is not the quiz creator');
+          console.log('  - User ID:', user.id);
+          console.log('  - Quiz creator ID:', quiz.createdBy);
         }
       }
     } catch (error) {
